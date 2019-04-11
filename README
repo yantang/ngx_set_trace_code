@@ -1,8 +1,14 @@
+#简介
 作用范围：http main conf, server, location
-
 命令：trace_code (on|off)
-
 效果：
 0) 为每个request生成一个 trace code (request start sec + start msec + server ip)
 1) 把trace code 添加到 request 和 response的header中
 2) 日志中增加trace code信息
+
+#使用方法
+1，ngx_http_set_trace_code_module.c和config放入同一个目录下，比如src/addone/set_trace_code/
+2，重新编译nginx, 需要指定新加模块的路径: 
+    ./auto/configure --with-debug --prefix=/Users/tangyan/nginx --add-module=/Users/tangyan/src/nginx/src/addone/set_trace_code && make && make install
+3，nginx.conf修改日志级别为debug，即可看到设置效果(response也会增加tracecode的header):
+    error_log logs/error.log debug;
